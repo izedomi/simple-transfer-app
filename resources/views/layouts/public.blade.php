@@ -14,15 +14,15 @@
         <script src="{{ asset('public/js/app.js') }}" defer></script>
 
         <!-- Styles -->
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
-        <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css') }}">
+        <link href="{{ asset('public/css/app.css') }}" rel="stylesheet">
+        <link href="{{ asset('public/css/custom.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('public/font-awesome/css/font-awesome.min.css') }}">
 
 
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            
+
           @yield('content')
 
 
