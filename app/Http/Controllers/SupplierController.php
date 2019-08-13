@@ -242,7 +242,7 @@ class SupplierController extends Controller{
 
           if($this->delete_transfer_recipient($recipient_code)){
              $supplier = Supplier::where('supplier_id', $recipient_code)->get();
-             $supplier[0]->delete();
+             if(count($supplier) > 0){$supplier[0]->delete();}           
              return redirect('/home')->with('success', 'Supplier deleted successfully');
           }
           else {
