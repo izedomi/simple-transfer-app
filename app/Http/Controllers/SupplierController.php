@@ -431,7 +431,7 @@ class SupplierController extends Controller{
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_HTTPHEADER => [
              // "authorization: $this->testSecretKey",
-              config('app.secret_key')
+              "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f"
 
             ],
           ));
@@ -466,7 +466,7 @@ class SupplierController extends Controller{
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => [
          // "authorization: $this->testSecretKey",
-          config('app.secret_key')
+          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f"
         ],
       ));
 
@@ -508,7 +508,7 @@ class SupplierController extends Controller{
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => [
          // "authorization: $this->testSecretKey",
-          config('app.secret_key')
+          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f"
 
         ],
       ));
@@ -570,7 +570,7 @@ class SupplierController extends Controller{
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => [
          // "authorization: $this->testSecretKey",
-          config('app.secret_key')
+          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f"
         ],
       ));
 
@@ -639,7 +639,7 @@ class SupplierController extends Controller{
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => [
          // "authorization: $this->testSecretKey",
-          config('app.secret_key')
+          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f"
         ],
       ));
 
