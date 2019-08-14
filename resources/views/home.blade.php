@@ -28,7 +28,7 @@
                         <div class="col-md-4 bg-info pb-3">
                           @if($walletBalance != null)
                           <div class="text-center bg-white p-1 mb-4">
-                            WALLET BALANCE
+                            WALLET BALANCE<br/>
                             <span class="text-danger">{{$walletBalance}}</span>
                           </div>
                           @endif

@@ -22,7 +22,7 @@ class SupplierController extends Controller{
         $walletBalanceInKobo = $this->get_wallet_balance();
 
         $amountInNaira = Utility::amount_delimeter($walletBalanceInKobo / 100);
-        $walletBalance = "NGN".$amountInNaira;
+        $walletBalance = "NGN ".$amountInNaira;
         //return $sLists;
         //return $tLists->paginate(15)
         if($sLists == null){$sLists = array();}
@@ -384,7 +384,7 @@ class SupplierController extends Controller{
           return redirect('/home')->with('error', "Ooops, coudn't connect to the server\nPlease refresh the page and try again");
         }
         if($response['status']){
-          return redirect('/home')->with('success', 'Bulk Transfer operation successful. '.$response['message']);
+          return redirect('/home')->with('success', 'Bulk Transfer operation successful.');
         }
         return redirect('/home')->with('error', "Bulk Transfer operation couldn't be completed. Please try again later");
 
@@ -424,6 +424,8 @@ class SupplierController extends Controller{
 
 
     //API CALLS
+
+    //get requests
     private function get_list_of_banks(){
           $curl = curl_init();
           curl_setopt_array($curl, array(
@@ -458,6 +460,76 @@ class SupplierController extends Controller{
                   return $tranx['data'];
               }
           }
+    }
+    private function get_list_of_suppliers(){
+
+      $curl = curl_init();
+      curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.paystack.co/transferrecipient",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => [
+         // "authorization: $this->testSecretKey",
+          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f"
+        ],
+      ));
+
+      $response = curl_exec($curl);
+      $err = curl_error($curl);
+
+      if($err){
+        // there was an error contacting the Paystack API
+        return redirect('/home')->with('error', "Ooops, coudn't connect to the server\nPlease refresh the page and try again");
+      }
+
+      $tranx = json_decode($response, true);
+
+      //return $tranx;
+
+      //return $tranx['data'];
+
+      if(!$tranx['status']){ die('API returned error: '.$tranx['message']);}
+
+      if($tranx['status']){
+          if(count($tranx['data']) > 0){
+              return $tranx['data'];
+          }
+      }
+
+    }
+    private function get_list_of_transfers(){
+      $curl = curl_init();
+      curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.paystack.co/transfer",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => [
+         // "authorization: $this->testSecretKey",
+          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f"
+        ],
+      ));
+
+      $response = curl_exec($curl);
+      $err = curl_error($curl);
+
+      if($err){
+        // there was an error contacting the Paystack API
+          return redirect('/home')->with('error', "Ooops, coudn't connect to the server\nPlease refresh the page and try again");
+      }
+
+      $tranx = json_decode($response, true);
+
+      //return $tranx;
+
+      //return $tranx['data'];
+
+      if(!$tranx['status']){
+        return redirect('/home')->with('error', $tranx['message']);
+      }
+
+      if($tranx['status']){
+          return $tranx['data'];
+      }
     }
     private function get_wallet_balance(){
       $curl = curl_init();
@@ -499,6 +571,8 @@ class SupplierController extends Controller{
       }
 
     }
+
+    //post requests
     private function resolve_account_number($accountNo, $bankCode){
       $url = "https://api.paystack.co/bank/resolve?account_number={$accountNo}&bank_code={$bankCode}";
       //return $url;
@@ -562,42 +636,6 @@ class SupplierController extends Controller{
           return $tranx;
 
       }
-    private function get_list_of_suppliers(){
-
-      $curl = curl_init();
-      curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://api.paystack.co/transferrecipient",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_CUSTOMREQUEST => "GET",
-        CURLOPT_HTTPHEADER => [
-         // "authorization: $this->testSecretKey",
-          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f"
-        ],
-      ));
-
-      $response = curl_exec($curl);
-      $err = curl_error($curl);
-
-      if($err){
-        // there was an error contacting the Paystack API
-        return redirect('/home')->with('error', "Ooops, coudn't connect to the server\nPlease refresh the page and try again");
-      }
-
-      $tranx = json_decode($response, true);
-
-      //return $tranx;
-
-      //return $tranx['data'];
-
-      if(!$tranx['status']){ die('API returned error: '.$tranx['message']);}
-
-      if($tranx['status']){
-          if(count($tranx['data']) > 0){
-              return $tranx['data'];
-          }
-      }
-
-    }
     private function initiate_transfer($amount, $recipient_code, $reason){
       $curl = curl_init();
       curl_setopt_array($curl, array(
@@ -630,115 +668,6 @@ class SupplierController extends Controller{
 
       return $tranx;
 
-
-    }
-    private function get_list_of_transfers(){
-      $curl = curl_init();
-      curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://api.paystack.co/transfer",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_CUSTOMREQUEST => "GET",
-        CURLOPT_HTTPHEADER => [
-         // "authorization: $this->testSecretKey",
-          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f"
-        ],
-      ));
-
-      $response = curl_exec($curl);
-      $err = curl_error($curl);
-
-      if($err){
-        // there was an error contacting the Paystack API
-          return redirect('/home')->with('error', "Ooops, coudn't connect to the server\nPlease refresh the page and try again");
-      }
-
-      $tranx = json_decode($response, true);
-
-      //return $tranx;
-
-      //return $tranx['data'];
-
-      if(!$tranx['status']){
-        return redirect('/home')->with('error', $tranx['message']);
-      }
-
-      if($tranx['status']){
-          return $tranx['data'];
-      }
-    }
-    private function delete_transfer_recipient($recipient_code){
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-          CURLOPT_URL => "https://api.paystack.co/transferrecipient/".$recipient_code,
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_CUSTOMREQUEST => "DELETE",
-          CURLOPT_HTTPHEADER => [
-            "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
-            "content-type: application/json"
-          ],
-        ));
-
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-
-        if($err){
-          // there was an error contacting the Paystack API
-          return redirect('/home')->with('error', "Ooops, coudn't connect to the server\nPlease refresh the page and try again");
-          //die('Curl returned error: ' . $err);
-        }
-
-        $tranx = json_decode($response, true);
-
-        //return $tranx;
-
-        //return $tranx['data'];
-
-        return $tranx['status'];
-
-          /*
-          if(!$tranx['status']){
-            //die('API returned error: '.$tranx['message']);
-            return $tranx['status'];
-          }
-
-          if($tranx['status']){
-              return $tranx['status'];
-          }
-        */
-
-    }
-    private function update_transfer_recipient($supplierName, $recipientCode){
-      $curl = curl_init();
-      $url = "https://api.paystack.co/transferrecipient/{$recipientCode}";
-      //return $url;
-      $d= array("name" => "{$supplierName}");
-      $data = json_encode($d);
-      //after json_encode, $data = {"name":"VesGroups"}
-      curl_setopt_array($curl, array(
-        CURLOPT_URL => $url,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_CUSTOMREQUEST => "PUT",
-        CURLOPT_POSTFIELDS => $data,
-        CURLOPT_HTTPHEADER => [
-          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
-          "content-type: application/json",
-        ],
-      ));
-
-      $response = curl_exec($curl);
-      $err = curl_error($curl);
-
-      //return $response;
-
-      if($err){
-        // there was an error contacting the Paystack API
-        return redirect("/home")->with('error', "Ooops, coudn't connect to the server\nPlease refresh the page and try again");
-        //die('Curl returned error: ' . $err);
-      }
-
-      $tranx = json_decode($response, true);
-
-      return $tranx;
 
     }
     private function finalize_otp_transfer($otp, $transfer_code){
@@ -829,6 +758,85 @@ class SupplierController extends Controller{
         $tranx = json_decode($response, true);
 
         return $tranx;
+
+    }
+
+    //put
+    private function update_transfer_recipient($supplierName, $recipientCode){
+      $curl = curl_init();
+      $url = "https://api.paystack.co/transferrecipient/{$recipientCode}";
+      //return $url;
+      $d= array("name" => "{$supplierName}");
+      $data = json_encode($d);
+      //after json_encode, $data = {"name":"VesGroups"}
+      curl_setopt_array($curl, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CUSTOMREQUEST => "PUT",
+        CURLOPT_POSTFIELDS => $data,
+        CURLOPT_HTTPHEADER => [
+          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
+          "content-type: application/json",
+        ],
+      ));
+
+      $response = curl_exec($curl);
+      $err = curl_error($curl);
+
+      //return $response;
+
+      if($err){
+        // there was an error contacting the Paystack API
+        return redirect("/home")->with('error', "Ooops, coudn't connect to the server\nPlease refresh the page and try again");
+        //die('Curl returned error: ' . $err);
+      }
+
+      $tranx = json_decode($response, true);
+
+      return $tranx;
+
+    }
+
+    //delete
+    private function delete_transfer_recipient($recipient_code){
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => "https://api.paystack.co/transferrecipient/".$recipient_code,
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_CUSTOMREQUEST => "DELETE",
+          CURLOPT_HTTPHEADER => [
+            "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
+            "content-type: application/json"
+          ],
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        if($err){
+          // there was an error contacting the Paystack API
+          return redirect('/home')->with('error', "Ooops, coudn't connect to the server\nPlease refresh the page and try again");
+          //die('Curl returned error: ' . $err);
+        }
+
+        $tranx = json_decode($response, true);
+
+        //return $tranx;
+
+        //return $tranx['data'];
+
+        return $tranx['status'];
+
+          /*
+          if(!$tranx['status']){
+            //die('API returned error: '.$tranx['message']);
+            return $tranx['status'];
+          }
+
+          if($tranx['status']){
+              return $tranx['status'];
+          }
+        */
 
     }
 }
