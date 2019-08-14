@@ -388,6 +388,37 @@ class SupplierController extends Controller{
         return redirect('/home')->with('error', "Bulk Transfer operation couldn't be completed. Please try again later");
 
     }
+    public function resend_otp(){
+      //return $transferCode;
+      if(isset($_GET['tcode'])){
+        $transferCode = $_GET['tcode'];
+
+
+        $response = $this->resend_transfer_otp($transferCode);
+        //return $response;
+        $msg = "";
+        if($response == '00'){
+          $msg = "Ooops.Error occured...please try again";
+        }
+        if($response['status']){
+          $msg = $response['message'];
+        }
+        if(!$response['status']){
+           $msg = "Couldn't not resend otp...please try again";
+        }
+
+        $data = array(
+          'transfer_code' => $transferCode,
+          'msg' => $msg,
+        );
+
+        //return view('verify-otp-transfer')->with("transfer_code", $transferCode
+        return view('verify-otp-transfer')->with($data);
+
+
+      }
+
+    }
 
 
 
@@ -738,6 +769,36 @@ class SupplierController extends Controller{
 
       return $tranx;
 
+    }
+    private function resend_transfer_otp($transferCode){
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => "https://api.paystack.co/transfer/resend_otp",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => json_encode([
+          'reason'=>'transfer',
+          'transfer_code'=> "{$transferCode}",
+          ]),
+          CURLOPT_HTTPHEADER => [
+            config('app.secret_key'),
+            "content-type: application/json"
+          ],
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        if($err){
+          // there was an error contacting the Paystack API
+          return "00";
+        //  return redirect('/home')->with('error', "Ooops, coudn't connect to the server\nPlease refresh the page and try again");
+          //die('Curl returned error: ' . $err);
+        }
+
+        $tranx = json_decode($response, true);
+
+        return $tranx;
     }
     private function initiate_bulk_transfer($paymentArray){
 

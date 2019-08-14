@@ -18,6 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'SupplierController@index')->name('home');
+Route::get('/resend-otp', 'SupplierController@resend_otp');
 Route::post('/add-supplier', 'SupplierController@add_supplier');
 Route::post('/update-supplier', 'SupplierController@update_supplier');
 Route::post('/delete-supplier', 'SupplierController@delete_supplier');
