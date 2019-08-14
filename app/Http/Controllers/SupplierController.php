@@ -541,7 +541,7 @@ class SupplierController extends Controller{
             'metadata'=>array('accountName' => $accountName,)
             ]),
             CURLOPT_HTTPHEADER => [
-              config('app.secret_key'),
+              "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
               "content-type: application/json"
             ],
           ));
@@ -611,7 +611,7 @@ class SupplierController extends Controller{
         'currency'=>'NGN'
         ]),
         CURLOPT_HTTPHEADER => [
-          config('app.secret_key'),
+          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
           "content-type: application/json"
         ],
       ));
@@ -672,7 +672,7 @@ class SupplierController extends Controller{
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_CUSTOMREQUEST => "DELETE",
           CURLOPT_HTTPHEADER => [
-            config('app.secret_key'),
+            "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
             "content-type: application/json"
           ],
         ));
@@ -719,7 +719,7 @@ class SupplierController extends Controller{
         CURLOPT_CUSTOMREQUEST => "PUT",
         CURLOPT_POSTFIELDS => $data,
         CURLOPT_HTTPHEADER => [
-          config('app.secret_key'),
+          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
           "content-type: application/json",
         ],
       ));
@@ -751,7 +751,7 @@ class SupplierController extends Controller{
         'transfer_code'=> "{$transfer_code}",
         ]),
         CURLOPT_HTTPHEADER => [
-          config('app.secret_key'),
+          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
           "content-type: application/json"
         ],
       ));
@@ -781,7 +781,7 @@ class SupplierController extends Controller{
           'transfer_code'=> "{$transferCode}",
           ]),
           CURLOPT_HTTPHEADER => [
-            config('app.secret_key'),
+            "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
             "content-type: application/json"
           ],
         ));
@@ -811,7 +811,7 @@ class SupplierController extends Controller{
           CURLOPT_CUSTOMREQUEST => "POST",
           CURLOPT_POSTFIELDS => json_encode($paymentArray),
           CURLOPT_HTTPHEADER => [
-            config('app.secret_key'),
+            "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
             "content-type: application/json"
           ],
         ));
