@@ -17,9 +17,9 @@ class SupplierController extends Controller{
 
         $sLists = $this->get_list_of_suppliers();
         //return $sLists;
-        //return $tLists = $this->get_list_of_transfers();
-        //return $bLists = $this->get_list_of_banks();
-        return $walletBalanceInKobo = $this->get_wallet_balance();
+        $tLists = $this->get_list_of_transfers();
+        $bLists = $this->get_list_of_banks();
+        $walletBalanceInKobo = $this->get_wallet_balance();
 
         $amountInNaira = Utility::amount_delimeter($walletBalanceInKobo / 100);
         $walletBalance = "NGN".$amountInNaira;
