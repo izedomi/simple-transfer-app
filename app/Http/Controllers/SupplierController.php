@@ -242,7 +242,7 @@ class SupplierController extends Controller{
 
           if($this->delete_transfer_recipient($recipient_code)){
              $supplier = Supplier::where('supplier_id', $recipient_code)->get();
-             if(count($supplier) > 0){$supplier[0]->delete();}           
+             if(count($supplier) > 0){$supplier[0]->delete();}
              return redirect('/home')->with('success', 'Supplier deleted successfully');
           }
           else {
@@ -372,7 +372,14 @@ class SupplierController extends Controller{
 
         */
 
-        return $this->initiate_bulk_transfer($c);
+        $response = $this->initiate_bulk_transfer($c);
+        if($response == '00'){
+          return redirect('/home')->with('error', "Ooops, coudn't connect to the server\nPlease refresh the page and try again");
+        }
+        if($response['status']){
+          return redirect('/home')->with('success', 'Bulk Transfer operation successful. '.$response['message']);
+        }
+        return redirect('/home')->with('error', "Bulk Transfer operation failed. Try again later");
 
     }
 
@@ -709,8 +716,7 @@ class SupplierController extends Controller{
 
         if($err){
           // there was an error contacting the Paystack API
-        //  return 0;
-          return redirect('/home')->with('error', "Ooops, coudn't connect to the server\nPlease refresh the page and try again");
+          return '00';
           //die('Curl returned error: ' . $err);
         }
 
