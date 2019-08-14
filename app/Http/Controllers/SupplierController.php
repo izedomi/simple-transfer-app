@@ -379,7 +379,7 @@ class SupplierController extends Controller{
         if($response['status']){
           return redirect('/home')->with('success', 'Bulk Transfer operation successful. '.$response['message']);
         }
-        return redirect('/home')->with('error', "Bulk Transfer operation failed. Try again later");
+        return redirect('/home')->with('error', "Bulk Transfer operation couldn't be completed. Please try again later");
 
     }
 
