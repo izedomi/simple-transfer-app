@@ -123,6 +123,11 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    //'secret_key' => [
+    //  'authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f'
+    //],
+    'secret_key' => env('SECRET_KEY'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

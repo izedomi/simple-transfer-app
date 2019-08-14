@@ -400,7 +400,7 @@ class SupplierController extends Controller{
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_HTTPHEADER => [
              // "authorization: $this->testSecretKey",
-              "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f"
+              config('app.secret_key')
 
             ],
           ));
@@ -435,7 +435,7 @@ class SupplierController extends Controller{
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => [
          // "authorization: $this->testSecretKey",
-          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f"
+          config('app.secret_key')
         ],
       ));
 
@@ -477,7 +477,7 @@ class SupplierController extends Controller{
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => [
          // "authorization: $this->testSecretKey",
-          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f"
+          config('app.secret_key')
 
         ],
       ));
@@ -510,7 +510,7 @@ class SupplierController extends Controller{
             'metadata'=>array('accountName' => $accountName,)
             ]),
             CURLOPT_HTTPHEADER => [
-              "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
+              config('app.secret_key'),
               "content-type: application/json"
             ],
           ));
@@ -539,7 +539,7 @@ class SupplierController extends Controller{
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => [
          // "authorization: $this->testSecretKey",
-          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f"
+          config('app.secret_key')
         ],
       ));
 
@@ -580,7 +580,7 @@ class SupplierController extends Controller{
         'currency'=>'NGN'
         ]),
         CURLOPT_HTTPHEADER => [
-          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
+          config('app.secret_key'),
           "content-type: application/json"
         ],
       ));
@@ -608,10 +608,7 @@ class SupplierController extends Controller{
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => [
          // "authorization: $this->testSecretKey",
-          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f"
-
-         //"authorization: Bearer sk_test_83db0494fa1e9bf8a0f4b3d6a0048153355f3ac5", //replace this with your own test key
-         //"authorization: Bearer sk_live_0ae2d2d4d5cd1375632056dfadee95542f8e22e8",
+          config('app.secret_key')
         ],
       ));
 
@@ -644,7 +641,7 @@ class SupplierController extends Controller{
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_CUSTOMREQUEST => "DELETE",
           CURLOPT_HTTPHEADER => [
-            "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
+            config('app.secret_key'),
             "content-type: application/json"
           ],
         ));
@@ -691,7 +688,7 @@ class SupplierController extends Controller{
         CURLOPT_CUSTOMREQUEST => "PUT",
         CURLOPT_POSTFIELDS => $data,
         CURLOPT_HTTPHEADER => [
-          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
+          config('app.secret_key'),
           "content-type: application/json",
         ],
       ));
@@ -723,7 +720,7 @@ class SupplierController extends Controller{
         'transfer_code'=> "{$transfer_code}",
         ]),
         CURLOPT_HTTPHEADER => [
-          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
+          config('app.secret_key'),
           "content-type: application/json"
         ],
       ));
@@ -753,7 +750,7 @@ class SupplierController extends Controller{
           CURLOPT_CUSTOMREQUEST => "POST",
           CURLOPT_POSTFIELDS => json_encode($paymentArray),
           CURLOPT_HTTPHEADER => [
-            "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
+            config('app.secret_key'),
             "content-type: application/json"
           ],
         ));
