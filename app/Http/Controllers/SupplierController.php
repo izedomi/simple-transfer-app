@@ -434,7 +434,7 @@ class SupplierController extends Controller{
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_HTTPHEADER => [
              // "authorization: $this->testSecretKey",
-              "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f"
+             config('app.secret_key')
 
             ],
           ));
@@ -470,7 +470,7 @@ class SupplierController extends Controller{
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => [
          // "authorization: $this->testSecretKey",
-          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f"
+          config('app.secret_key')
         ],
       ));
 
@@ -505,7 +505,7 @@ class SupplierController extends Controller{
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => [
          // "authorization: $this->testSecretKey",
-          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f"
+          config('app.secret_key')
         ],
       ));
 
@@ -539,7 +539,7 @@ class SupplierController extends Controller{
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => [
          // "authorization: $this->testSecretKey",
-          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f"
+          config('app.secret_key')
         ],
       ));
 
@@ -571,8 +571,6 @@ class SupplierController extends Controller{
       }
 
     }
-
-    //post requests
     private function resolve_account_number($accountNo, $bankCode){
       $url = "https://api.paystack.co/bank/resolve?account_number={$accountNo}&bank_code={$bankCode}";
       //return $url;
@@ -583,7 +581,7 @@ class SupplierController extends Controller{
         CURLOPT_CUSTOMREQUEST => "GET",
         CURLOPT_HTTPHEADER => [
          // "authorization: $this->testSecretKey",
-          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f"
+          config('app.secret_key')
 
         ],
       ));
@@ -601,6 +599,8 @@ class SupplierController extends Controller{
 
 
     }
+    //post requests
+
     private function create_transfer_recipient($supplierName, $accountName, $accountNo, $bankCode){
           $curl = curl_init();
           curl_setopt_array($curl, array(
@@ -616,7 +616,7 @@ class SupplierController extends Controller{
             'metadata'=>array('accountName' => $accountName,)
             ]),
             CURLOPT_HTTPHEADER => [
-              "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
+              config('app.secret_key'),
               "content-type: application/json"
             ],
           ));
@@ -650,7 +650,7 @@ class SupplierController extends Controller{
         'currency'=>'NGN'
         ]),
         CURLOPT_HTTPHEADER => [
-          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
+          config('app.secret_key'),
           "content-type: application/json"
         ],
       ));
@@ -681,7 +681,7 @@ class SupplierController extends Controller{
         'transfer_code'=> "{$transfer_code}",
         ]),
         CURLOPT_HTTPHEADER => [
-          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
+          config('app.secret_key'),
           "content-type: application/json"
         ],
       ));
@@ -711,7 +711,7 @@ class SupplierController extends Controller{
           'transfer_code'=> "{$transferCode}",
           ]),
           CURLOPT_HTTPHEADER => [
-            "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
+            config('app.secret_key'),
             "content-type: application/json"
           ],
         ));
@@ -741,7 +741,7 @@ class SupplierController extends Controller{
           CURLOPT_CUSTOMREQUEST => "POST",
           CURLOPT_POSTFIELDS => json_encode($paymentArray),
           CURLOPT_HTTPHEADER => [
-            "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
+            config('app.secret_key'),
             "content-type: application/json"
           ],
         ));
@@ -775,7 +775,7 @@ class SupplierController extends Controller{
         CURLOPT_CUSTOMREQUEST => "PUT",
         CURLOPT_POSTFIELDS => $data,
         CURLOPT_HTTPHEADER => [
-          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
+          config('app.secret_key'),
           "content-type: application/json",
         ],
       ));
@@ -805,7 +805,7 @@ class SupplierController extends Controller{
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_CUSTOMREQUEST => "DELETE",
           CURLOPT_HTTPHEADER => [
-            "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f",
+            config('app.secret_key'),
             "content-type: application/json"
           ],
         ));
