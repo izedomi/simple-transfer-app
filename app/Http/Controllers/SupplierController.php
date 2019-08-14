@@ -16,6 +16,7 @@ class SupplierController extends Controller{
     public function index(){
 
         $sLists = $this->get_list_of_suppliers();
+        return $sLists;
         $tLists = $this->get_list_of_transfers();
         $bLists = $this->get_list_of_banks();
         $walletBalanceInKobo = $this->get_wallet_balance();
