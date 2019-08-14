@@ -802,11 +802,11 @@ class SupplierController extends Controller{
     }
     private function initiate_bulk_transfer($paymentArray){
 
-        //  return json_encode($paymentArray);
+          //return json_encode($paymentArray);
 
         $curl = curl_init();
         curl_setopt_array($curl, array(
-          CURLOPT_URL => "https://api.paystack.co/transfer",
+          CURLOPT_URL => "https://api.paystack.co/transfer/bulk",
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_CUSTOMREQUEST => "POST",
           CURLOPT_POSTFIELDS => json_encode($paymentArray),
