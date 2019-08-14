@@ -18,6 +18,10 @@ class SupplierController extends Controller{
         $sLists = $this->get_list_of_suppliers();
         $tLists = $this->get_list_of_transfers();
         $bLists = $this->get_list_of_banks();
+        $walletBalanceInKobo = $this->get_wallet_balance();
+
+        $amountInNaira = Utility::amount_delimeter($walletBalanceInKobo / 100);
+        $walletBalance = "NGN".$amountInNaira;
         //return $sLists;
         //return $tLists->paginate(15)
         if($sLists == null){$sLists = array();}
@@ -45,7 +49,6 @@ class SupplierController extends Controller{
                   'bank_name' => $value['recipient']['details']['bank_name']
                );
                array_push($newTLists, $arg);
-
           }
         }
 
@@ -55,12 +58,13 @@ class SupplierController extends Controller{
            'supplierLists' => $sLists,
            'bankLists' => $bLists,
            'transferLists' => $newTLists,
+           'walletBalance' => $walletBalance
+
         );
 
         return view('home')->with($data);
     }
     public function add_supplier(Request $request){
-
       //return $request->all();
 
         $this->validate($request, [
@@ -159,6 +163,8 @@ class SupplierController extends Controller{
 
               //api update call
              $response = $this->update_transfer_recipient($supplierName, $recipientCode);
+
+             //return $response;
 
              if(!$response['status']){
                 return redirect('/home')->with('error', $response['message'] . ". Failed to update supplier details");
@@ -421,6 +427,46 @@ class SupplierController extends Controller{
               }
           }
     }
+    private function get_wallet_balance(){
+      $curl = curl_init();
+      curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.paystack.co/balance",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => [
+         // "authorization: $this->testSecretKey",
+          "authorization: Bearer sk_test_50a81d6e3035dfd39a64e14a03e05b824e913e2f"
+        ],
+      ));
+
+      $response = curl_exec($curl);
+      $err = curl_error($curl);
+
+      if($err){
+        // there was an error contacting the Paystack API
+        return "";
+      }
+
+      $tranx = json_decode($response, true);
+
+      //return $tranx;
+
+      //return $tranx['data'];
+
+      if(!$tranx['status']){
+        return "";
+      }
+
+      if($tranx['status']){
+          if(($tranx['data']) != null){
+              return $tranx['data'][0]['balance'];
+          }
+          else{
+            return "";
+          }
+      }
+
+    }
     private function resolve_account_number($accountNo, $bankCode){
       $url = "https://api.paystack.co/bank/resolve?account_number={$accountNo}&bank_code={$bankCode}";
       //return $url;
@@ -638,6 +684,7 @@ class SupplierController extends Controller{
       //return $url;
       $d= array("name" => "{$supplierName}");
       $data = json_encode($d);
+      //after json_encode, $data = {"name":"VesGroups"}
       curl_setopt_array($curl, array(
         CURLOPT_URL => $url,
         CURLOPT_RETURNTRANSFER => true,

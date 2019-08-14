@@ -14,19 +14,24 @@
                           <h3 class="float-left m-1">  </h3>
 
                             <a href="#" class="btn btn-light float-right m-1" data-toggle="modal" data-target="#add-new-supplier">
-
                              Add Supplier <i class="fa fa-plus fa-fw"></i>
-                          </a>
+                             </a>
 
-                            <a class="btn btn-danger text-white float-right m-1 @if(count($supplierLists) < 2) {{'disabled'}} @endif" data-toggle="modal" data-target="#bulk-transfer"> 
+                            <a class="btn btn-danger text-white float-right m-1 @if(count($supplierLists) < 2) {{'disabled'}} @endif" data-toggle="modal" data-target="#bulk-transfer">
                               Bulk transfer
                             </a>
 
                         </div>
                       </div>
                       <div class="row justify-content-center">
-                        <div class="col-md-4 bg-info py-3">
 
+                        <div class="col-md-4 bg-info pb-3">
+                          @if($walletBalance != null)
+                          <div class="text-center bg-white p-1 mb-4">
+                            WALLET BALANCE
+                            <span class="text-danger">{{$walletBalance}}</span>
+                          </div>
+                          @endif
                           <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">
                               Suppliers<span class="badge badge-light float-right mt-1">{{count($supplierLists)}}</span>
