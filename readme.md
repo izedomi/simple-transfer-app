@@ -21,4 +21,9 @@
 ## REQUIREMENT
 - You will need to signup with paystack(business account) to obtain the necessary test and live keys.
 
+## LIVE PROJECT
+- url :  http://simple-transfer-app.herokuapp.com/
+- default email: ema@gmail.com
+- default password: emmanuel
+
 
