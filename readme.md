@@ -1,4 +1,4 @@
-<h3 align="center">SIMPLE TRANSFER APP</h3>
+<h2 align="center">SIMPLE TRANSFER APP</h2>
 <p> Simple Transfer App is a fast, secured and easy to use web application that enables a merchant transfer funds to suppliers. It uses paystack api extensively to achieve the goal </p>
 
 ## FEATURES
